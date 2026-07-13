@@ -5,7 +5,8 @@ import { BootLoader } from "@/components/animations/BootLoader";
 import { RecruiterView } from "@/components/layout/RecruiterView";
 import { DeveloperView } from "@/components/layout/DeveloperView";
 import { PresentationView } from "@/components/layout/PresentationView";
-import { Terminal, Shield, Laptop, Server, Award, ChevronRight } from "lucide-react";
+import { DynamicBackground } from "@/components/animations/DynamicBackground";
+import { Terminal, Shield, Laptop, Server } from "lucide-react";
 import React from "react";
 
 export default function Home() {
@@ -16,20 +17,20 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-[#060709] text-zinc-100 flex flex-col antialiased relative overflow-x-hidden selection:bg-emerald-500/20 selection:text-emerald-400">
+    <div className="min-h-screen bg-background text-zinc-100 flex flex-col antialiased relative overflow-x-hidden selection:bg-emerald-500/20 selection:text-emerald-400">
       
-      {/* Floating particles background (pure CSS GPU-accelerated) */}
-      <div className="absolute inset-0 -z-50 bg-[radial-gradient(#1f2937_1px,transparent_1px)] [background-size:24px_24px] opacity-15 pointer-events-none"></div>
+      {/* GPU-Accelerated Dynamic Particle Canvas Background */}
+      <DynamicBackground />
 
-      {/* Global Top Menu Bar */}
-      <header className="h-14 bg-[#090a0d] border-b border-zinc-900 px-4 md:px-8 flex items-center justify-between shrink-0 select-none sticky top-0 z-40 backdrop-blur-md">
+      {/* Global Top Menu Bar (Surface theme) */}
+      <header className="h-14 bg-surface border-b border-elevated px-4 md:px-8 flex items-center justify-between shrink-0 select-none sticky top-0 z-40 backdrop-blur-md">
         <div className="flex items-center gap-2">
           {/* Logo / Brand */}
           <div className="flex items-center gap-2">
             <span className="w-6 h-6 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 flex items-center justify-center text-white font-black text-xs font-mono">
               A
             </span>
-            <div className="flex flex-col">
+            <div className="flex flex-col mt-0.5">
               <span className="text-xs font-black tracking-tight text-white font-mono leading-none">DevOS // Adarsh</span>
               <span className="text-[9px] font-bold text-zinc-500 font-mono tracking-wider leading-none mt-1">PROJECT HELIOS v1.0</span>
             </div>
@@ -37,7 +38,7 @@ export default function Home() {
         </div>
 
         {/* Dynamic Mode Switcher (Tab System) */}
-        <div className="flex bg-zinc-950 p-1 rounded-xl border border-zinc-900 select-none">
+        <div className="flex bg-zinc-950 p-1 rounded-xl border border-elevated select-none">
           <button
             onClick={() => setMode("recruiter")}
             className={`px-3 py-1.5 rounded-lg text-[10px] md:text-xs font-bold transition flex items-center gap-1.5 cursor-pointer ${
@@ -81,7 +82,7 @@ export default function Home() {
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
             <span>JVM: Active (v21)</span>
           </div>
-          <div className="flex items-center gap-1.5 border-l border-zinc-800 pl-4">
+          <div className="flex items-center gap-1.5 border-l border-elevated pl-4">
             <Server size={10} className="text-zinc-500" />
             <span>git://ARBiradar</span>
           </div>
@@ -95,8 +96,8 @@ export default function Home() {
         {mode === "presentation" && <PresentationView />}
       </main>
 
-      {/* Global Status/Footer bar */}
-      <footer className="h-8 bg-[#090a0d] border-t border-zinc-900 px-4 md:px-8 flex items-center justify-between text-[10px] font-mono text-zinc-500 select-none shrink-0">
+      {/* Global Status/Footer bar (Surface theme) */}
+      <footer className="h-8 bg-surface border-t border-elevated px-4 md:px-8 flex items-center justify-between text-[10px] font-mono text-zinc-500 select-none shrink-0">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-1">
             <span className="text-[#6db33f] font-bold">✔</span>

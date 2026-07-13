@@ -228,10 +228,10 @@ export function DeveloperView() {
   };
 
   return (
-    <div className="flex-1 w-full flex flex-col md:flex-row bg-[#08090c] border border-zinc-800 rounded-2xl overflow-hidden h-[84vh] shadow-2xl relative select-none">
+    <div className="flex-1 w-full flex flex-col md:flex-row bg-surface border border-elevated rounded-2xl overflow-hidden h-[84vh] shadow-2xl relative select-none">
       
       {/* 1. Left Vertical Activity Bar */}
-      <div className="w-14 bg-[#050608] border-r border-zinc-900 flex flex-col justify-between items-center py-4 shrink-0 gap-8">
+      <div className="w-14 bg-background border-r border-elevated flex flex-col justify-between items-center py-4 shrink-0 gap-8">
         <div className="flex flex-col gap-4.5 w-full items-center">
           <button
             onClick={() => setSidebarTab("explorer")}
@@ -270,11 +270,11 @@ export function DeveloperView() {
       </div>
 
       {/* 2. Primary Drawer Panel (e.g. Explorer File Tree) */}
-      <div className="w-64 bg-[#0a0b0e] border-r border-zinc-900 flex flex-col shrink-0">
+      <div className="w-64 bg-surface border-r border-elevated flex flex-col shrink-0">
         
         {sidebarTab === "explorer" && (
           <div className="flex-1 flex flex-col overflow-y-auto">
-            <div className="px-4 py-3 border-b border-zinc-900 flex justify-between items-center bg-[#07080a]">
+            <div className="px-4 py-3 border-b border-elevated flex justify-between items-center bg-background">
               <span className="text-[10px] uppercase font-bold text-zinc-500 tracking-wider">Workspace Explorer</span>
             </div>
             
@@ -463,10 +463,10 @@ export function DeveloperView() {
       </div>
 
       {/* 3. Main Editor Window & Bottom Terminal Panels */}
-      <div className="flex-1 flex flex-col min-w-0 bg-[#090a0d]">
+      <div className="flex-1 flex flex-col min-w-0 bg-surface">
         
         {/* Editor Tabs bar */}
-        <div className="h-10 bg-[#07080a] border-b border-zinc-900 flex items-center px-2 overflow-x-auto select-none gap-1 shrink-0 scrollbar-none">
+        <div className="h-10 bg-background border-b border-elevated flex items-center px-2 overflow-x-auto select-none gap-1 shrink-0 scrollbar-none">
           {tabs.map((tab) => {
             const isActive = tab.path === activeTabPath;
             return (
@@ -474,7 +474,7 @@ export function DeveloperView() {
                 key={tab.path}
                 className={`flex items-center gap-1.5 h-8 px-3 rounded-lg text-xs font-medium transition group border ${
                   isActive 
-                    ? "bg-[#090a0d] border-zinc-800 text-white font-semibold" 
+                    ? "bg-surface border-elevated text-white font-semibold" 
                     : "border-transparent text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900/60"
                 }`}
               >
