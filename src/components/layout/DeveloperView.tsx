@@ -41,9 +41,9 @@ public class AdarshBiradar {
     public static void main(String[] args) {
         Developer adarsh = new Developer();
         adarsh.setName("Adarsh Biradar");
-        adarsh.setExpertise("Java Full Stack / Backend Systems");
-        adarsh.setCoreFrameworks(List.of("Spring Boot", "Spring Cloud", "Hibernate"));
-        adarsh.setCloudPlatform("AWS (Amazon Web Services)");
+        adarsh.setExpertise("Java Full Stack / Backend Systems & AI Integration");
+        adarsh.setCoreFrameworks(List.of("Spring Boot", "Spring Framework", "Hibernate", "React", "Next.js"));
+        adarsh.setCloudPlatform("AWS / Vercel");
         
         System.out.println(adarsh.getMissionStatement());
     }
@@ -55,15 +55,16 @@ public class AdarshBiradar {
     code: `# About Me
 
 * Name: Adarsh Biradar
-* Role: Java Full Stack Developer
-* Codename: Project Helios
+* Role: Java Full Stack Developer & AI Associate
+* CGPA: 8.37 MCA Graduate
+* Location: Bengaluru, Karnataka, India
 
-I specialize in constructing bulletproof backend services. With a solid foundation in competitive programming, I approach system design with a focus on optimal time and space complexity. 
+I am a Java Full Stack Developer specializing in Spring Boot, AWS, and secure backend systems. With a strong foundation in Java, Spring Boot, SQL, and AWS, I specialize in implementing role-based authentication, automating complex backend workflows, and designing optimized database structures.
 
 ## Technical Philosophy
-1. Write clean, self-documenting code.
-2. Design microservices with event-driven architecture to guarantee decoupling.
-3. Treat scalability and latency constraints as critical requirements, not afterthoughts.`
+1. Write clean, self-documenting, modular code.
+2. Design microservices with dynamic event workflows to guarantee decoupling.
+3. Leverage AI-assisted tooling to accelerate development, refactoring, and testing.`
   },
   "src/Skills.sql": {
     language: "sql",
@@ -77,12 +78,12 @@ ORDER BY years_experience DESC;`
   "src/Experience.log": {
     language: "log",
     description: "Log-style work chronology.",
-    code: `2024-01-15 09:00:00 [INFO] hexacorp.migration.Context - Loaded role: Senior Backend Developer
-2024-03-10 14:15:32 [INFO] hexacorp.postgres.Performance - Schema updated: Indexing 10M txn tables
-2024-07-22 18:45:00 [INFO] hexacorp.ci.Pipeline - Sync success: AWS ECS Deploy pipeline (8m duration)
-2021-07-01 09:00:00 [INFO] nextgen.platform.Bootstrap - Loaded role: Java Full Stack Developer
-2022-11-04 11:20:05 [INFO] nextgen.cache.RedisConfig - Implemented listing caching, database CPU load -60%
-2023-08-12 16:30:10 [INFO] nextgen.test.Runner - JUnit execution context success. 88% overall test coverage.`
+    code: `2025-01-15 09:00:00 [INFO] naresh_it.ai_research.Context - Loaded role: Full Stack Java & Generative/Agentic AI Research Associate
+2025-03-22 14:15:32 [INFO] naresh_it.microservices.Design - Designed Java Full Stack application architecture & studied advanced DSA
+2025-05-10 18:45:00 [INFO] naresh_it.agentic_ai.Workflow - Built prompt engineering abstractions & Agentic AI workflows
+2024-12-01 09:00:00 [INFO] code_alpha.complaint_mgmt.Context - Loaded role: Java Developer Intern
+2024-12-20 11:20:05 [INFO] code_alpha.mysql.Optimization - Automated complaint workflows & optimized MySQL DB operations
+2025-01-15 17:00:00 [INFO] code_alpha.auth.Security - Implemented role-based authentication, manual workflow reduced by 70%`
   }
 };
 

@@ -27,111 +27,238 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
-    id: "cloudstream",
-    title: "CloudStream Gateway",
-    role: "Lead Backend Developer",
-    description: "A reactive, high-throughput video streaming backend engine capable of handling chunked video transfer, microservice routing, and user session management.",
+    id: "pulsearena",
+    title: "PulseArena",
+    role: "Full Stack Developer",
+    description: "A high-performance fan engagement platform built for real-time live events, managing high concurrency poll submissions and instant messaging syncing.",
     difficulty: "Hard",
     rank: 1,
     status: "Accepted",
-    solveTime: "12 days",
-    tags: ["Spring Boot", "WebFlux", "AWS ECS", "Redis", "Kafka"],
-    githubUrl: "https://github.com/ARBiradar",
+    solveTime: "14 days",
+    tags: ["React", "Next.js", "Spring Boot", "WebSockets", "Redis", "MySQL"],
+    githubUrl: "https://github.com/ARBiradar/PulseArena",
+    liveUrl: "https://pulse-arena-phi.vercel.app/",
     stats: {
       memory: "128 MB",
+      runtime: "15 ms",
+      language: "TypeScript"
+    },
+    walkthrough: {
+      problem: "Traditional HTTP polling creates significant server load and lag during live events. When thousands of fans vote or post reactions simultaneously, backend relational databases experience severe write locks and latency spikes.",
+      architecture: "Next.js client establishing persistent duplex WebSocket connections to a Spring Boot microservice. User poll responses are routed through a reactive event loop, buffered in a Redis cache, and flushed to a MySQL database in optimized batches.",
+      stack: ["React 19", "Next.js 15", "Spring Boot", "Spring WebFlux", "Redis Cache", "WebSocket API", "MySQL"],
+      challenges: "Synchronizing real-time stream stats while preventing vote manipulation (double voting) and scaling the WebSocket connections under network jitter.",
+      lessons: "Implemented token-based rate limiting on connection hands-up, and utilized Redis HyperLogLog structures for unique vote counts to achieve O(1) time complexity checks.",
+      codeSnippet: `// WebSocket Real-time Poll Handler
+@Component
+public class PollWebSocketHandler extends TextWebSocketHandler {
+    private final RedisTemplate<String, String> redisTemplate;
+    
+    @Override
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) {
+        PollVote vote = parseJson(message.getPayload());
+        String key = "poll:" + vote.getPollId() + ":votes";
+        // Record vote in Redis set to ensure uniqueness
+        Boolean isNew = redisTemplate.opsForSet().add(key, vote.getUserId());
+        if (Boolean.TRUE.equals(isNew)) {
+            redisTemplate.opsForHash().increment("poll:" + vote.getPollId(), vote.getOption(), 1);
+            broadcastUpdate(vote.getPollId());
+        }
+    }
+}`
+    }
+  },
+  {
+    id: "securevote",
+    title: "SecureVote",
+    role: "Smart Contract & Backend Engineer",
+    description: "A decentralized, tamper-proof blockchain voting platform ensuring voter anonymity and auditability of election results.",
+    difficulty: "Hard",
+    rank: 2,
+    status: "Accepted",
+    solveTime: "10 days",
+    tags: ["Solidity", "React", "Hardhat", "Ethers.js", "Tailwind CSS"],
+    stats: {
+      memory: "64 MB",
+      runtime: "42 ms",
+      language: "Solidity"
+    },
+    walkthrough: {
+      problem: "Centralized election servers are susceptible to database breaches, administrator corruption, and lack verifiable audits, leading to low voter trust.",
+      architecture: "React frontend using Ethers.js to communicate directly with EVM smart contracts. The contract validates voter status on-chain, records anonymous votes, and exposes cryptographic proof of final tallies.",
+      stack: ["Solidity 0.8.20", "React", "Ethers.js", "Hardhat", "Tailwind CSS", "Metamask Integration"],
+      challenges: "Mitigating high gas costs associated with writing voter history on-chain, while maintaining strict anonymity to prevent coercion.",
+      lessons: "Designed gas-optimized mapping schemas and utilized off-chain Merkle tree roots for voter verification, leaving only the hash state changes on-chain.",
+      codeSnippet: `// Solidity Voting Core Logic
+contract SecureVote {
+    struct Proposal {
+        string name;
+        uint256 voteCount;
+    }
+    mapping(address => bool) public hasVoted;
+    Proposal[] public proposals;
+
+    function castVote(uint256 proposalId) external {
+        require(!hasVoted[msg.sender], "Voter has already cast a ballot.");
+        require(proposalId < proposals.length, "Target proposal does not exist.");
+        
+        hasVoted[msg.sender] = true;
+        proposals[proposalId].voteCount++;
+        emit VoteCast(msg.sender, proposalId);
+    }
+}`
+    }
+  },
+  {
+    id: "codepush",
+    title: "CodePush Extension",
+    role: "Extension Developer",
+    description: "A Chrome developer utility that automatically captures, formats, and pushes code updates from online sandboxes directly to a GitHub repository.",
+    difficulty: "Medium",
+    rank: 3,
+    status: "Accepted",
+    solveTime: "5 days",
+    tags: ["JavaScript", "Chrome Extensions", "GitHub API", "OAuth2"],
+    githubUrl: "https://github.com/ARBiradar/codepush-extension",
+    stats: {
+      memory: "32 MB",
+      runtime: "8 ms",
+      language: "JavaScript"
+    },
+    walkthrough: {
+      problem: "When learning or solving coding challenges in browser environments, developers must manually copy, create files, and commit changes via terminal, which breaks focus.",
+      architecture: "Background service worker listening to tab actions. It dynamically extracts target code from sandbox elements, retrieves OAuth2 tokens, and commits the code directly to a GitHub repo using the GitHub REST API.",
+      stack: ["Chrome Extension Manifest V3", "Vanilla JS", "GitHub REST API", "Chrome Storage API"],
+      challenges: "Securely storing GitHub personal access tokens in a browser environment and handling potential merge conflicts automatically without disrupting the interface.",
+      lessons: "Leveraged Chrome's secure storage API for credential encryption and implemented an optimistic file-overwrite strategy for consecutive changes.",
+      codeSnippet: `// Chrome Extension Background Commit Handler
+async function pushToGitHub(token, repo, path, content, sha = null) {
+    const url = \`https://api.github.com/repos/\${repo}/contents/\${path}\`;
+    const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+            "Authorization": \`token \${token}\`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            message: "Auto-push: Solution update",
+            content: btoa(unescape(encodeURIComponent(content))),
+            sha: sha
+        })
+    });
+    return response.json();
+}`
+    }
+  },
+  {
+    id: "mytrip",
+    title: "MyTrip",
+    role: "Java Backend Developer",
+    description: "A high-performance MakeMyTrip clone featuring aggregated flight/hotel search engines and concurrent booking coordinators.",
+    difficulty: "Medium",
+    rank: 4,
+    status: "Solved",
+    solveTime: "7 days",
+    tags: ["Spring Boot", "JPA", "MySQL", "React", "Tailwind CSS"],
+    stats: {
+      memory: "160 MB",
       runtime: "12 ms",
       language: "Java"
     },
     walkthrough: {
-      problem: "Traditional thread-per-request architectures failed under high-concurrency streaming loads, resulting in out-of-memory errors and thread starvation when delivering large video files to thousands of concurrent users.",
-      architecture: "Reactive gateway router built on Spring Cloud Gateway. Video files are sliced into 1MB chunks and stored on AWS S3, cached in Redis clusters, and pushed asynchronously via Spring WebFlux streams. Apache Kafka tracks user viewing events in real-time.",
-      stack: ["Java 21", "Spring Boot 3.x", "Spring WebFlux", "Reactive Redis", "Apache Kafka", "AWS S3 / CloudFront", "Docker"],
-      challenges: "Handling backpressure in reactive streams when client download speed was slower than chunk retrieval speed, which could overwhelm server memory buffers.",
-      lessons: "Learned how to leverage project Reactor's limitRate operator and reactive caching strategies to throttle data flow based on client consumption rates, preventing buffer overflow and achieving sub-50ms video start latency.",
-      codeSnippet: `@GetMapping(value = "/stream/{videoName}", produces = "video/mp4")
-public Mono<ResponseEntity<ResourceRegion>> streamVideo(
-        @RequestHeader(value = "Range", required = false) String rangeHeader,
-        @PathVariable String videoName) {
-    return videoService.getVideoResource(videoName)
-            .map(resource -> {
-                ResourceRegion region = resourceRegion(resource, rangeHeader);
-                return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT)
-                        .contentType(MediaType.parseMediaType("video/mp4"))
-                        .body(region);
-            });
+      problem: "Querying multiple external airline and hotel APIs sequentially leads to unacceptable user page loading latencies. The service needs to aggregate data and handle bookings concurrently.",
+      architecture: "Spring Boot aggregator querying hotel and flight supplier mock APIs concurrently in separate worker threads using Java's CompletableFuture framework, assembling a unified payload.",
+      stack: ["Java 17", "Spring Boot", "Spring Data JPA", "Hibernate", "MySQL", "React", "Tailwind CSS"],
+      challenges: "Managing thread pool starvation under high user traffic and gracefully handling API timeouts from external suppliers.",
+      lessons: "Configured custom thread executors tailored to I/O-bound tasks and integrated the Resilience4j Circuit Breaker pattern to supply fallback values.",
+      codeSnippet: `// Concurrent API Aggregator Service
+public CompletableFuture<List<Flight>> fetchFlightsAsync(String origin, String destination) {
+    return CompletableFuture.supplyAsync(() -> {
+        // Query external flight supplier endpoint
+        return restTemplate.getForObject(
+            "/api/supplier/flights?from=" + origin + "&to=" + destination, 
+            Flight[].class
+        );
+    }, ioThreadPool).thenApply(Arrays::asList);
 }`
     }
   },
   {
-    id: "devdock",
-    title: "DevDock Sandbox Runner",
-    role: "Backend Architect",
-    description: "A secure, containerized sandbox runner that dynamically executes user-submitted code in isolated environments, running unit tests and reporting output, identical to competitive-programming platforms.",
-    difficulty: "Hard",
-    rank: 2,
-    status: "Accepted",
-    solveTime: "18 days",
-    tags: ["Spring Boot", "Docker SDK", "RabbitMQ", "AWS S3"],
-    githubUrl: "https://github.com/ARBiradar",
-    stats: {
-      memory: "256 MB",
-      runtime: "48 ms",
-      language: "Java"
-    },
-    walkthrough: {
-      problem: "Executing untrusted user submissions (like arbitrary Java/Python code) directly on the host server poses extreme security threats (such as infinite loops, malicious file reading, or fork bombs).",
-      architecture: "Submissions are queued in RabbitMQ. A Spring Boot worker pool pulls submissions, writes code files, mounts them into pre-configured isolated Docker containers via the Docker Java API, and sets hard CPU/Memory limits.",
-      stack: ["Java 17", "Spring Boot", "Docker Java SDK", "RabbitMQ", "Bash Scripts", "AWS S3"],
-      challenges: "Preventing infinite loop resource starvation (hard limits on runtime) and safely cleaning up container processes without leaking resources on the host machine.",
-      lessons: "Configured custom Docker resource constraints (cgroups) limiting memory to 64MB, CPU share to 0.5 cores, and used a system daemon watchdog that issues SIGKILL commands after a 5-second timeout.",
-      codeSnippet: `public ContainerResponse runSubmission(Submission submission) {
-    CreateContainerResponse container = dockerClient.createContainerCmd("openjdk:17-slim")
-        .withHostConfig(HostConfig.newHostConfig()
-            .withMemory(64 * 1024 * 1024L) // 64MB Limit
-            .withCpuPercent(50L))          // 50% CPU limit
-        .withCmd("java", "-cp", "/workspace", "Solution")
-        .exec();
-    
-    dockerClient.startContainerCmd(container.getId()).exec();
-    // Wait for execution with 5s timeout...
-}`
-    }
-  },
-  {
-    id: "coreengine",
-    title: "CoreEngine Microservices",
-    role: "System Engineer",
-    description: "Distributed, event-driven enterprise e-commerce API core handling transaction management, inventory state machine, search index syncing, and token-based gateway security.",
+    id: "dsa",
+    title: "DSA-for-MAANG",
+    role: "Core Contributor",
+    description: "A curated collection of highly optimized Java solutions to algorithmic puzzles, with regression unit test suites.",
     difficulty: "Medium",
-    rank: 3,
-    status: "Accepted",
-    solveTime: "7 days",
-    tags: ["Spring Cloud", "PostgreSQL", "Elasticsearch", "Kubernetes"],
-    githubUrl: "https://github.com/ARBiradar",
+    rank: 5,
+    status: "Solved",
+    solveTime: "30 days",
+    tags: ["Java", "DSA", "JUnit 5", "Algorithms"],
+    githubUrl: "https://github.com/ARBiradar/DSA-for-MAANG",
     stats: {
-      memory: "192 MB",
-      runtime: "8 ms",
+      memory: "48 MB",
+      runtime: "2 ms",
       language: "Java"
     },
     walkthrough: {
-      problem: "Ensuring database consistency and search index updates across multiple distributed microservices during high concurrent checkout sales without degrading user response times.",
-      architecture: "Spring Boot services integrated with Spring Cloud Netflix Eureka. Database transactions are isolated per microservice. Database changes trigger Outbox pattern messages that are published to Kafka to asynchronously update Elasticsearch indices.",
-      stack: ["Java 17", "Spring Boot", "Spring Cloud Gateway", "PostgreSQL", "Elasticsearch", "Apache Kafka", "Kubernetes"],
-      challenges: "Managing distributed transactions and handling transactional rollback across services (e.g., payment fails after inventory is reserved).",
-      lessons: "Implemented the Saga Pattern (orchestration-based) to manage multi-service transactions. Created compensating actions (e.g., releasing inventory) triggered by payment cancellation events.",
-      codeSnippet: `@Transactional
-public Order createOrder(OrderRequest request) {
-    Order order = Order.builder()
-        .userId(request.getUserId())
-        .status(OrderStatus.PENDING)
-        .build();
-    orderRepository.save(order);
-    
-    // Write outbox event to ensure transaction guarantees
-    OutboxEvent event = new OutboxEvent("ORDER_CREATED", order.getId(), order);
-    outboxRepository.save(event);
-    return order;
+      problem: "Writing algorithmic solutions that not only solve logical problems but also satisfy strict time and memory complexity thresholds for tech giants like Microsoft or Google.",
+      architecture: "Structured library of competitive programming solutions in Java, ranging from dynamic programming matrices to graph traversal systems, validated by JUnit regression engines.",
+      stack: ["Java 17", "JUnit 5 Test Runner", "Maven Pipeline"],
+      challenges: "Eliminating micro-inefficiencies (such as excessive object allocations) that lead to Garbage Collection overhead in high-throughput coding scenarios.",
+      lessons: "Learned array-based representations of trees/graphs and object pooling to guarantee minimum memory overhead, reducing execution times to sub-2ms bounds.",
+      codeSnippet: `// Two-Pointer Two-Sum HashMap Implementation
+public int[] twoSum(int[] nums, int target) {
+    Map<Integer, Integer> numMap = new HashMap<>();
+    for (int i = 0; i < nums.length; i++) {
+        int complement = target - nums[i];
+        if (numMap.containsKey(complement)) {
+            return new int[] { numMap.get(complement), i };
+        }
+        numMap.put(nums[i], i);
+    }
+    throw new IllegalArgumentException("No two sum solution found");
 }`
+    }
+  },
+  {
+    id: "swapnil",
+    title: "Swapnil Portfolio",
+    role: "Freelance Frontend Lead",
+    description: "A highly interactive, responsive freelance developer portfolio website showcasing custom layouts, creative interfaces, and fluid animations.",
+    difficulty: "Easy",
+    rank: 6,
+    status: "Solved",
+    solveTime: "3 days",
+    tags: ["Next.js", "React", "Tailwind CSS", "Framer Motion"],
+    stats: {
+      memory: "96 MB",
+      runtime: "6 ms",
+      language: "TypeScript"
+    },
+    walkthrough: {
+      problem: "Interactive elements and layout shifting during page loading can create a disjointed UX. Portfolios require flawless design, high speed, and premium responsiveness.",
+      architecture: "Static Site Generation (SSG) in Next.js, allowing instant page loads. Layout changes and elements entrance are managed smoothly via Framer Motion.",
+      stack: ["Next.js 14", "React 18", "Tailwind CSS", "Framer Motion", "Vercel Deployment"],
+      challenges: "Achieving smooth 60fps animations across all desktop and low-end mobile devices without causing main-thread rendering lag.",
+      lessons: "Leveraged hardware-accelerated CSS properties and next/image layout optimization to ensure 100/100 Lighthouse performance metrics.",
+      codeSnippet: `// Responsive Menu Entry Animation
+export const SidebarAnimation = {
+    open: {
+        x: 0,
+        transition: {
+            type: "spring",
+            stiffness: 400,
+            damping: 40
+        }
+    },
+    closed: {
+        x: "100%",
+        transition: {
+            type: "spring",
+            stiffness: 400,
+            damping: 40
+        }
+    }
+};`
     }
   }
 ];

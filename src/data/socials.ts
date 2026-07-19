@@ -14,32 +14,38 @@ export const SOCIALS: Social[] = [
   },
   {
     platform: "LinkedIn",
-    url: "https://linkedin.com/in/adarsh-biradar",
-    username: "adarsh-biradar",
+    url: "https://www.linkedin.com/in/adarsh-biradar-87141a261/",
+    username: "adarsh-biradar-87141a261",
     iconName: "Linkedin"
   },
   {
     platform: "LeetCode",
-    url: "https://leetcode.com/u/ARBiradar/",
-    username: "ARBiradar",
+    url: "https://leetcode.com/u/AdarshRB/",
+    username: "AdarshRB",
     iconName: "Code2"
   },
   {
     platform: "HackerRank",
-    url: "https://hackerrank.com/profile/ARBiradar",
-    username: "ARBiradar",
+    url: "https://www.hackerrank.com/profile/adarshbiradar56",
+    username: "adarshbiradar56",
     iconName: "Award"
   },
   {
     platform: "GeeksforGeeks",
-    url: "https://geeksforgeeks.org/user/ARBiradar",
-    username: "ARBiradar",
+    url: "https://www.geeksforgeeks.org/profile/adarshbib7l6",
+    username: "adarshbib7l6",
     iconName: "Terminal"
   },
   {
+    platform: "Instagram",
+    url: "https://www.instagram.com/om.birajdar.18/",
+    username: "om.birajdar.18",
+    iconName: "Instagram"
+  },
+  {
     platform: "Email",
-    url: "mailto:adarsh.biradar@example.com",
-    username: "adarsh.biradar@example.com",
+    url: "mailto:adarshbiradar56@gmail.com",
+    username: "adarshbiradar56@gmail.com",
     iconName: "Mail"
   }
 ];

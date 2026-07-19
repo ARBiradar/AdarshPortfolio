@@ -93,38 +93,53 @@ export function PresentationView() {
             {/* Interactive ASCII representation of architecture */}
             <div className="bg-zinc-950/80 border border-zinc-900 p-5 rounded-2xl font-mono text-xs text-emerald-400 space-y-1.5 overflow-x-auto leading-none">
               <p className="text-zinc-600 select-none"># INTERVIEW DESTRUCTURING ARCHITECTURE MAP</p>
-              {project.id === "cloudstream" && (
+              {project.id === "pulsearena" && (
                 <>
-                  <p>Client Request --&gt; [ CloudFront CDN Cache ] (1MB chunks)</p>
-                  <p>                   |</p>
-                  <p>                   v</p>
-                  <p>        [ Spring Cloud Gateway GatewayRouter ] --&gt; Kafka Trace log</p>
-                  <p>                   |</p>
-                  <p>                   +---&gt; [ WebFlux Server1 ] --&gt; Redis Cache --&gt; S3 Storage</p>
-                  <p>                   v</p>
-                  <p>        Dynamic Netty Connection Throttling (limitRate)</p>
+                  <p>Client Browser --&gt; [ Next.js Frontend ] --&gt; WebSocket Duplex Connection</p>
+                  <p>                                                   |</p>
+                  <p>                                                   v</p>
+                  <p>MySQL DB &lt;-- Batch Writes &lt;-- [ Spring Boot REST/WS ] &lt;-- Redis Cache (Counts)</p>
                 </>
               )}
-              {project.id === "devdock" && (
+              {project.id === "securevote" && (
                 <>
-                  <p>User Code Submit --&gt; [ Spring Controller API ] --&gt; [ RabbitMQ SubmissionQueue ]</p>
-                  <p>                                                             |</p>
-                  <p>                                                             v</p>
-                  <p>                                                [ CodeRunnerWorkerPool Daemon ]</p>
-                  <p>                                                             |</p>
-                  <p>                  +------------------------------------------+</p>
-                  <p>                  v</p>
-                  <p>        [ Isolated Docker SDK Sandbox Container ] --&gt; CPU/Memory cgroups limit</p>
+                  <p>Voter Wallet --&gt; [ React Web UI ] --&gt; Ethers.js Web3 Provider</p>
+                  <p>                                               |</p>
+                  <p>                                               v</p>
+                  <p>  Ethereum / Polygon Network &lt;-- [ Solidity Smart Contract ] (On-Chain Proofs)</p>
                 </>
               )}
-              {project.id === "coreengine" && (
+              {project.id === "codepush" && (
                 <>
-                  <p>API Gateway Security Auth --&gt; [ OrderService Database ] --&gt; Outbox DB Table</p>
-                  <p>                                                                      |</p>
-                  <p>                                                                      v</p>
-                  <p>Elasticsearch SearchIndex &lt;-- Kafka Topic &lt;-- [ Outbox Publisher Worker ]</p>
-                  <p>                                  |</p>
-                  <p>                                  +---&gt; [ Sagas Orchestrator Coordinator ]</p>
+                  <p>Sandbox Code --&gt; [ Chrome Extension Background Worker ]</p>
+                  <p>                                                 |</p>
+                  <p>                                                 v</p>
+                  <p>  Secure Storage Token &lt;-- Git Push Commit --&gt; [ GitHub REST API ]</p>
+                </>
+              )}
+              {project.id === "mytrip" && (
+                <>
+                  <p>User Search Query --&gt; [ React UI ] --&gt; [ Spring Boot Aggregator ]</p>
+                  <p>                                                    |</p>
+                  <p>                         +--------------------------+</p>
+                  <p>                         v                          v</p>
+                  <p>             [ CompletableFuture Flights ]  [ CompletableFuture Hotels ]</p>
+                </>
+              )}
+              {project.id === "dsa" && (
+                <>
+                  <p>Algorithmic Code --&gt; [ Java 17 Solution Class ] --&gt; JUnit Regression Runner</p>
+                  <p>                                                    |</p>
+                  <p>                                                    v</p>
+                  <p>  Optimized Time complexity O(N) & Space complexity O(1) validations</p>
+                </>
+              )}
+              {project.id === "swapnil" && (
+                <>
+                  <p>User Device --&gt; [ SSG static assets ] --&gt; Edge CDN Server (Vercel)</p>
+                  <p>                                                |</p>
+                  <p>                                                v</p>
+                  <p>  60fps Hardware-Accelerated Animation Loop &lt;-- [ Framer Motion Hooks ]</p>
                 </>
               )}
             </div>

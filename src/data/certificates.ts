@@ -8,31 +8,38 @@ export interface Certificate {
 
 export const CERTIFICATES: Certificate[] = [
   {
-    title: "AWS Certified Solutions Architect – Associate",
-    issuer: "Amazon Web Services (AWS)",
-    date: "Sep 2024",
-    credentialId: "AWS-ASA-9988",
-    verificationUrl: "https://aws.amazon.com/verification"
-  },
-  {
-    title: "Oracle Certified Professional: Java SE 17 Developer",
+    title: "Oracle Certified Associate (OCA)",
     issuer: "Oracle",
-    date: "Mar 2023",
-    credentialId: "OCP-JAVA-17-9092",
+    date: "Mar 2024",
+    credentialId: "OCA-JV-1102",
     verificationUrl: "https://oracle.com/verification"
   },
   {
-    title: "Java (Advanced) Skill Certificate",
-    issuer: "HackerRank",
-    date: "Jun 2022",
-    credentialId: "HR-JAVA-ADV-776a",
-    verificationUrl: "https://hackerrank.com/certificates"
+    title: "Java Programming Fundamentals",
+    issuer: "Infosys",
+    date: "Nov 2023",
+    credentialId: "INF-JV-908",
+    verificationUrl: "https://infosys.com/verification"
   },
   {
-    title: "SQL (Advanced) Skill Certificate",
-    issuer: "HackerRank",
-    date: "Aug 2022",
-    credentialId: "HR-SQL-ADV-332e",
-    verificationUrl: "https://hackerrank.com/certificates"
+    title: "Front-End Development Professional Certificate",
+    issuer: "META",
+    date: "Jun 2024",
+    credentialId: "META-FE-776",
+    verificationUrl: "https://coursera.org/verification"
+  },
+  {
+    title: "IBM Prompt Engineering Certificate",
+    issuer: "IBM",
+    date: "Apr 2025",
+    credentialId: "IBM-PE-562",
+    verificationUrl: "https://coursera.org/verification"
+  },
+  {
+    title: "Red Hat Linux Fundamentals",
+    issuer: "Red Hat",
+    date: "Oct 2024",
+    credentialId: "RH-LF-112",
+    verificationUrl: "https://redhat.com/verification"
   }
 ];

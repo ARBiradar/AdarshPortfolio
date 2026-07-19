@@ -19,11 +19,11 @@ export interface Profile {
 export const PROFILE: Profile = {
   name: "Adarsh Biradar",
   codename: "Project Helios",
-  tagline: "Where Recruiters Explore, Developers Feel at Home.",
-  heroLine: "Java Full Stack Developer specializing in Spring Boot, AWS, scalable backend systems, and modern engineering practices.",
-  bio: "Passionate software engineer focused on building robust, scalable microservices and backend architectures. With deep expertise in Java and the Spring Ecosystem, paired with cloud engineering practices on AWS, I turn complex business requirements into elegant, high-throughput systems.",
-  email: "adarsh.biradar@example.com",
-  location: "Pune, India",
+  tagline: "Java Full Stack Developer specializing in Spring Boot, AWS, and secure backend systems.",
+  heroLine: "Java Full Stack Developer specializing in Spring Boot, AWS, and secure backend systems.",
+  bio: "I am an MCA graduate (8.37 GPA) and Java Full Stack Developer with hands-on experience building secure, scalable web applications. With a strong foundation in Java, Spring Boot, SQL, and AWS, I specialize in implementing role-based authentication, automating complex backend workflows, and designing optimized database structures. I actively leverage AI-driven development tools to accelerate debugging, refactoring, and unit testing to deliver high-quality code efficiently.",
+  email: "adarshbiradar56@gmail.com",
+  location: "Bengaluru, India",
   stats: {
     problemsSolved: 486,
     acceptanceRate: "74.8%",

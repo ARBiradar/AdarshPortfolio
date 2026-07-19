@@ -74,7 +74,7 @@ export const useOSStore = create<OSState>((set) => ({
   addTerminalHistory: (cmd) =>
     set((state) => ({ terminalHistory: [...state.terminalHistory, cmd] })),
     
-  activeProjectId: "cloudstream",
+  activeProjectId: "pulsearena",
   setActiveProjectId: (id) => set({ activeProjectId: id, presentationStep: "problem" }),
   presentationStep: "problem",
   setPresentationStep: (presentationStep) => set({ presentationStep })

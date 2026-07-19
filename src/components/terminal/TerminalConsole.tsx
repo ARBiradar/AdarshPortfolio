@@ -7,6 +7,8 @@ import { SKILLS } from "@/data/skills";
 import { EXPERIENCES } from "@/data/experience";
 import { PROFILE } from "@/data/profile";
 import { SOCIALS } from "@/data/socials";
+import { EDUCATION_DATA } from "@/data/education";
+import { CERTIFICATES } from "@/data/certificates";
 import confetti from "canvas-confetti";
 
 interface CommandResult {
@@ -227,14 +229,14 @@ export function TerminalConsole() {
                 </div>
               ))}
             </div>
-            <p className="text-xs text-zinc-500">Run <span className="text-emerald-400">open &lt;project-id&gt;</span> to inspect (e.g. open cloudstream).</p>
+            <p className="text-xs text-zinc-500">Run <span className="text-emerald-400">open &lt;project-id&gt;</span> to inspect (e.g. open pulsearena).</p>
           </div>
         );
         break;
 
       case "open":
         if (args.length === 0) {
-          output = <p className="text-red-400">Error: Please specify project id (e.g. open cloudstream).</p>;
+          output = <p className="text-red-400">Error: Please specify project id (e.g. open pulsearena).</p>;
         } else {
           const match = PROJECTS.find((p) => p.id === args[0].toLowerCase());
           if (match) {
@@ -273,10 +275,22 @@ export function TerminalConsole() {
       case "education":
       case "edu":
         output = (
-          <div className="text-zinc-300 space-y-1">
-            <p className="font-semibold text-emerald-400">Visvesvaraya Technological University (VTU)</p>
-            <p className="text-sm">Bachelor of Engineering (B.E.) in Computer Science — 8.4 CGPA (2017 - 2021)</p>
-            <p className="text-xs text-zinc-500">Specialized in DBMS, Networks, Object-Oriented Design, and backend computing.</p>
+          <div className="space-y-3 text-zinc-300 max-w-2xl">
+            {EDUCATION_DATA.map((edu, i) => (
+              <div key={i} className="border-l-2 border-emerald-500 pl-4 py-1">
+                <div className="flex justify-between items-start flex-wrap">
+                  <h4 className="font-bold text-emerald-400 text-sm">{edu.degree}</h4>
+                  <span className="text-xs text-zinc-500 font-mono">{edu.duration}</span>
+                </div>
+                <p className="text-zinc-400 text-xs mt-1">{edu.institution} — {edu.grade}</p>
+                <p className="text-zinc-300 text-xs mt-1 italic">{edu.major}</p>
+                <ul className="list-disc list-inside text-xs text-zinc-300 mt-2 space-y-1">
+                  {edu.details.map((detail, dIndex) => (
+                    <li key={dIndex}>{detail}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         );
         break;
@@ -285,9 +299,9 @@ export function TerminalConsole() {
       case "cv":
         output = (
           <div className="text-zinc-300">
-            <p>Triggered resume download request.</p>
-            <a href="/resume.pdf" download className="text-emerald-400 underline hover:text-[#6db33f] font-bold">
-              Click here to download Resume PDF directly
+            <p>Opening your resume link in a new tab...</p>
+            <a href="https://drive.google.com/file/d/13joaCCPp-pKQ-lt8nTYKDkD_c74kahDl/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline hover:text-[#6db33f] font-bold">
+              Click here to view/download Resume directly on Google Drive
             </a>
           </div>
         );
@@ -295,11 +309,14 @@ export function TerminalConsole() {
 
       case "certificates":
         output = (
-          <div className="text-zinc-300 space-y-1.5">
-            <p className="font-semibold">Professional Certifications:</p>
-            <p className="text-xs text-zinc-400"><span className="text-emerald-400">✔</span> AWS Certified Solutions Architect - Associate (ID: AWS-ASA-9988)</p>
-            <p className="text-xs text-zinc-400"><span className="text-emerald-400">✔</span> Oracle Certified Professional: Java SE 17 Developer (ID: OCP-JAVA-17-9092)</p>
-            <p className="text-xs text-zinc-400"><span className="text-emerald-400">✔</span> HackerRank Java & SQL Advanced Developer Certificates</p>
+          <div className="text-zinc-300 space-y-2 max-w-xl">
+            <p className="font-semibold text-emerald-400">Professional Certifications:</p>
+            {CERTIFICATES.map((cert, i) => (
+              <div key={i} className="text-xs text-zinc-455">
+                <span className="text-emerald-400">✔</span> {cert.title} — {cert.issuer} ({cert.date})
+                {cert.credentialId && <span className="text-zinc-600 font-mono ml-2">[ID: {cert.credentialId}]</span>}
+              </div>
+            ))}
           </div>
         );
         break;
@@ -336,23 +353,86 @@ export function TerminalConsole() {
         break;
 
       case "github":
-      case "gh":
-        output = <p>GitHub Profile: <a href={SOCIALS[0].url} target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline">{SOCIALS[0].url}</a></p>;
+      case "gh": {
+        const url = SOCIALS.find((s) => s.platform.toLowerCase() === "github")?.url;
+        output = <p>GitHub Profile: <a href={url} target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline">{url}</a></p>;
         break;
+      }
       case "linkedin":
-      case "li":
-        output = <p>LinkedIn Profile: <a href={SOCIALS[1].url} target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline">{SOCIALS[1].url}</a></p>;
+      case "li": {
+        const url = SOCIALS.find((s) => s.platform.toLowerCase() === "linkedin")?.url;
+        output = <p>LinkedIn Profile: <a href={url} target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline">{url}</a></p>;
         break;
+      }
       case "leetcode":
-      case "lc":
-        output = <p>LeetCode Profile: <a href={SOCIALS[2].url} target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline">{SOCIALS[2].url}</a></p>;
+      case "lc": {
+        const url = SOCIALS.find((s) => s.platform.toLowerCase() === "leetcode")?.url;
+        output = <p>LeetCode Profile: <a href={url} target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline">{url}</a></p>;
         break;
+      }
       case "hackerrank":
-      case "hr":
-        output = <p>HackerRank Profile: <a href={SOCIALS[3].url} target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline">{SOCIALS[3].url}</a></p>;
+      case "hr": {
+        const url = SOCIALS.find((s) => s.platform.toLowerCase() === "hackerrank")?.url;
+        output = <p>HackerRank Profile: <a href={url} target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline">{url}</a></p>;
         break;
-      case "gfg":
-        output = <p>GeeksforGeeks Profile: <a href={SOCIALS[4].url} target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline">{SOCIALS[4].url}</a></p>;
+      }
+      case "gfg": {
+        const url = SOCIALS.find((s) => s.platform.toLowerCase() === "geeksforgeeks")?.url;
+        output = <p>GeeksforGeeks Profile: <a href={url} target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline">{url}</a></p>;
+        break;
+      }
+      case "instagram": {
+        const url = SOCIALS.find((s) => s.platform.toLowerCase() === "instagram")?.url;
+        output = <p>Instagram Profile: <a href={url} target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline">{url}</a></p>;
+        break;
+      }
+      case "achievements":
+        output = (
+          <div className="text-zinc-300 space-y-2 max-w-xl">
+            <p className="font-semibold text-emerald-400">Achievements & Leadership (NCC):</p>
+            <p className="text-xs"><span className="text-emerald-400">✔</span> <strong className="text-zinc-200">NCC Senior Cadet:</strong> Managed and led a regiment of over 1,000 cadets, coordinating training drills and crisis management operations.</p>
+            <p className="text-xs"><span className="text-emerald-400">✔</span> <strong className="text-zinc-200">ATC Camp Leader:</strong> Successfully directed Annual Training Camp operations and logistics.</p>
+            <p className="text-xs"><span className="text-emerald-400">✔</span> <strong className="text-zinc-200">Shooting Medal:</strong> Won 🥇 First Place Medal in division rifle shooting competition.</p>
+            <p className="text-xs text-zinc-500 font-semibold mt-1">Core leadership competencies developed: Discipline, Strategic Decision Making, Crisis Management, and Team Coordination.</p>
+          </div>
+        );
+        break;
+      case "tech":
+        output = (
+          <div className="text-zinc-300 space-y-2 max-w-xl font-mono">
+            <p className="font-semibold text-emerald-400">Technical Capability Stack:</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+              <div>
+                <span className="text-zinc-500">Languages:</span> Java, Python, JavaScript, TypeScript, SQL, HTML, CSS
+              </div>
+              <div>
+                <span className="text-zinc-500">Frameworks:</span> Spring Boot, Spring Framework, Spring MVC, Hibernate, React, Next.js, Tailwind CSS
+              </div>
+              <div>
+                <span className="text-zinc-500">DB & Cache:</span> MySQL, MongoDB, Oracle SQL
+              </div>
+              <div>
+                <span className="text-zinc-500">Cloud & Ops:</span> AWS, Vercel, Docker, Git, GitHub
+              </div>
+              <div>
+                <span className="text-zinc-500">Abstractions & AI:</span> Prompt Engineering, AI-assisted Dev, REST APIs, JWT Auth, JDBC
+              </div>
+            </div>
+          </div>
+        );
+        break;
+      case "timeline":
+        output = (
+          <div className="text-zinc-300 space-y-2 max-w-xl font-mono">
+            <p className="font-semibold text-emerald-400">Chronological Timeline:</p>
+            <div className="space-y-1.5 text-xs">
+              <p><span className="text-zinc-500">Jan 2025 - Present:</span> Full Stack Java & Generative/Agentic AI Research Associate @ Naresh IT</p>
+              <p><span className="text-zinc-500">Oct 2023 - Dec 2025:</span> Master of Computer Applications (MCA) @ Acharya Institute (Bengaluru)</p>
+              <p><span className="text-zinc-500">Dec 2024 - Jan 2025:</span> Java Developer Intern @ Code Alpha</p>
+              <p><span className="text-zinc-500">Jun 2019 - Nov 2022:</span> Bachelor of Science (B.Sc.) @ Rani Channamma University</p>
+            </div>
+          </div>
+        );
         break;
 
       case "version":
@@ -388,8 +468,8 @@ export function TerminalConsole() {
           output = (
             <div className="space-y-1">
               <p className="text-green-400 font-bold">ACCESS GRANTED. HIRING PROTOCOL ACTIVATED!</p>
-              <p className="text-zinc-300">"Thank you for recognizing top engineering talent! Sending email handshake to adarsh.biradar@example.com..."</p>
-              <p className="text-emerald-400 text-xs">Let's connect: adarsh.biradar@example.com or LinkedIn!</p>
+              <p className="text-zinc-300">"Thank you for recognizing top engineering talent! Sending email handshake to {PROFILE.email}..."</p>
+              <p className="text-emerald-400 text-xs">Let's connect: {PROFILE.email} or LinkedIn!</p>
             </div>
           );
         } else {

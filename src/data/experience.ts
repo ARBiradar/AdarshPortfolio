@@ -12,30 +12,31 @@ export interface Experience {
 export const EXPERIENCES: Experience[] = [
   {
     id: "exp1",
-    role: "Senior Backend Developer",
-    company: "HexaCorp Solutions",
-    location: "Pune, India (Hybrid)",
-    duration: "Jan 2024 - Present",
+    role: "Full Stack Java & Generative/Agentic AI Research Associate",
+    company: "Naresh IT (Advanced Tech Labs)",
+    location: "Bengaluru, India (Hybrid)",
+    duration: "Jan 2025 - Present",
     status: "Current",
     description: [
-      "Led the design and migration of monolithic user services to an event-driven microservices architecture using Spring Boot, Spring Cloud, and Kafka, reducing latency by 35%.",
-      "Designed and optimized core banking transaction schemas in PostgreSQL, utilizing indexing and partition tables to scale up to 10M transactions daily.",
-      "Configured CI/CD pipelines in GitHub Actions and deployed containerized applications to AWS ECS clusters, reducing deployment time from 1 hour to 8 minutes."
+      "Designing and implementing scalable Java Full Stack application architectures using Spring Boot, React, and Next.js.",
+      "Researching and developing Agentic AI workflows, building robust prompt engineering abstractions, and integrating AI-driven agents to automate software development lifecycles.",
+      "Constructing resilient microservices architectures and studying advanced data structures and algorithms (DSA) to write highly optimized, low-latency code."
     ],
-    technologies: ["Spring Boot", "Spring Cloud", "PostgreSQL", "Kafka", "Docker", "AWS", "GitHub Actions"]
+    technologies: ["Java", "Spring Boot", "React", "Next.js", "Microservices", "Agentic AI", "Generative AI", "DSA", "Prompt Engineering"]
   },
   {
     id: "exp2",
-    role: "Java Full Stack Developer",
-    company: "NextGen Software",
-    location: "Bangalore, India",
-    duration: "Jul 2021 - Dec 2023",
+    role: "Java Developer Intern",
+    company: "Code Alpha",
+    location: "Remote",
+    duration: "Dec 2024 - Jan 2025",
     status: "Completed",
     description: [
-      "Developed high-throughput API endpoints for an e-commerce platform using Spring Boot, Spring Security, Hibernate, and React.",
-      "Integrated Redis caching layer for product listings, resulting in a 60% reduction in database read load and improving UI response time.",
-      "Authored comprehensive unit and integration test suites using JUnit 5, Mockito, and AssertJ, achieving 88% overall code coverage."
+      "Developed an automated web-based Complaint Management System from scratch, reducing manual administrative workflows by approximately 70%.",
+      "Implemented secure, role-based JWT authentication and access controls for admins, agents, and users, ensuring standard security patterns.",
+      "Optimized MySQL database query schemas and transactional logic, leading to an approximate 45% reduction in response and resolution latency.",
+      "Automated complaints assignment and notification workflows to streamline task routing."
     ],
-    technologies: ["Java", "Spring Boot", "Hibernate", "Redis", "MySQL", "React", "JUnit", "Mockito"]
+    technologies: ["Java", "Spring Boot", "MySQL", "Spring Security", "JWT", "REST APIs", "HTML", "CSS"]
   }
 ];

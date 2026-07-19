@@ -7,6 +7,7 @@ import { EXPERIENCES } from "@/data/experience";
 import { PROFILE } from "@/data/profile";
 import { CERTIFICATES } from "@/data/certificates";
 import { SOCIALS } from "@/data/socials";
+import { EDUCATION_DATA } from "@/data/education";
 import { CoffeeCup } from "@/components/ui/CoffeeCup";
 import { ResumeCompiler } from "@/components/animations/ResumeCompiler";
 import { motion } from "framer-motion";
@@ -21,7 +22,9 @@ import {
   Calendar, 
   MapPin, 
   CheckCircle,
-  Code2
+  Code2,
+  Award,
+  GraduationCap
 } from "lucide-react";
 import React, { useState, useEffect } from "react";
 
@@ -54,6 +57,19 @@ const renderSocialIcon = (platform: string, size: number) => {
       </svg>
     );
   }
+  if (platform === "Instagram") {
+    return (
+      <svg viewBox="0 0 24 24" width={size} height={size} stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-instagram">
+        <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+      </svg>
+    );
+  }
+  if (platform === "LeetCode") return <Code2 size={size} />;
+  if (platform === "HackerRank") return <Award size={size} />;
+  if (platform === "GeeksforGeeks") return <Terminal size={size} />;
+  if (platform === "Email") return <Mail size={size} />;
   return <Code2 size={size} />;
 };
 
@@ -112,11 +128,8 @@ export function RecruiterView() {
 
   const handleCompileComplete = () => {
     setIsCompiling(false);
-    // Trigger download
-    const link = document.createElement("a");
-    link.href = "/resume.pdf";
-    link.download = "Adarsh_Biradar_Resume.pdf";
-    link.click();
+    // Open Google Drive resume link in a new tab
+    window.open("https://drive.google.com/file/d/13joaCCPp-pKQ-lt8nTYKDkD_c74kahDl/view?usp=sharing", "_blank");
   };
 
   return (
@@ -296,7 +309,7 @@ export function RecruiterView() {
               <h3 className="font-bold text-sm text-white uppercase tracking-wider">Languages</h3>
             </div>
             <div className="space-y-2">
-              {SKILLS.filter(s => s.category === "Language").slice(0, 4).map((skill) => (
+              {SKILLS.filter(s => s.category === "Language").map((skill) => (
                 <div key={skill.id} className="flex justify-between items-center text-xs">
                   <span className="text-zinc-300 font-medium">{skill.name}</span>
                   <span className="text-zinc-500 font-mono text-[10px]">{skill.expertise}</span>
@@ -312,7 +325,7 @@ export function RecruiterView() {
               <h3 className="font-bold text-sm text-white uppercase tracking-wider">Frameworks</h3>
             </div>
             <div className="space-y-2">
-              {SKILLS.filter(s => s.category === "Framework").slice(0, 4).map((skill) => (
+              {SKILLS.filter(s => s.category === "Framework").map((skill) => (
                 <div key={skill.id} className="flex justify-between items-center text-xs">
                   <span className="text-zinc-300 font-medium">{skill.name}</span>
                   <span className="text-zinc-500 font-mono text-[10px]">{skill.expertise}</span>
@@ -328,7 +341,7 @@ export function RecruiterView() {
               <h3 className="font-bold text-sm text-white uppercase tracking-wider">Cloud & DB</h3>
             </div>
             <div className="space-y-2">
-              {SKILLS.filter(s => s.category === "Cloud & DevOps" || s.category === "Database & Cache").slice(0, 4).map((skill) => (
+              {SKILLS.filter(s => s.category === "Cloud & DevOps" || s.category === "Database & Cache").map((skill) => (
                 <div key={skill.id} className="flex justify-between items-center text-xs">
                   <span className="text-zinc-300 font-medium">{skill.name}</span>
                   <span className="text-zinc-500 font-mono text-[10px]">{skill.expertise}</span>
@@ -344,7 +357,7 @@ export function RecruiterView() {
               <h3 className="font-bold text-sm text-white uppercase tracking-wider">Tools & QA</h3>
             </div>
             <div className="space-y-2">
-              {SKILLS.filter(s => s.category === "Testing & Tools").slice(0, 4).map((skill) => (
+              {SKILLS.filter(s => s.category === "Testing & Tools").map((skill) => (
                 <div key={skill.id} className="flex justify-between items-center text-xs">
                   <span className="text-zinc-300 font-medium">{skill.name}</span>
                   <span className="text-zinc-500 font-mono text-[10px]">{skill.expertise}</span>
@@ -411,34 +424,64 @@ export function RecruiterView() {
           </div>
         </section>
 
-        {/* Right col: Certifications */}
-        <section className="flex flex-col gap-6">
-          <div className="flex flex-col gap-1">
-            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-              <span className="w-1.5 h-6 bg-emerald-500 rounded"></span>
-              Certificates
-            </h2>
-            <p className="text-zinc-500 text-sm">Industry verified credentials.</p>
-          </div>
+        {/* Right col: Education & Certifications */}
+        <div className="flex flex-col gap-8">
+          {/* Education Section */}
+          <section className="flex flex-col gap-6">
+            <div className="flex flex-col gap-1">
+              <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                <span className="w-1.5 h-6 bg-emerald-500 rounded"></span>
+                Education
+              </h2>
+              <p className="text-zinc-500 text-sm">Academic credentials.</p>
+            </div>
 
-          <div className="space-y-4">
-            {CERTIFICATES.map((cert, certIdx) => (
-              <div 
-                key={certIdx} 
-                className="border border-elevated bg-[#0e1320] p-4 rounded-xl flex items-start gap-3 hover:border-zinc-700 transition"
-              >
-                <CheckCircle size={18} className="text-emerald-400 mt-0.5 shrink-0" />
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-bold text-sm text-zinc-200 truncate">{cert.title}</h4>
-                  <p className="text-xs text-zinc-500 mt-0.5">{cert.issuer} | {cert.date}</p>
-                  {cert.credentialId && (
-                    <p className="text-[10px] font-mono text-zinc-600 mt-1">ID: {cert.credentialId}</p>
-                  )}
+            <div className="space-y-4">
+              {EDUCATION_DATA.map((edu, eduIdx) => (
+                <div 
+                  key={eduIdx} 
+                  className="border border-elevated bg-[#0e1320] p-4 rounded-xl flex items-start gap-3 hover:border-zinc-700 transition"
+                >
+                  <GraduationCap size={18} className="text-emerald-400 mt-0.5 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-bold text-sm text-zinc-200">{edu.degree}</h4>
+                    <p className="text-xs text-zinc-400 font-medium mt-0.5">{edu.institution}</p>
+                    <p className="text-[10px] text-zinc-550 mt-1 font-mono">{edu.duration} | {edu.grade}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
+
+          {/* Certificates Section */}
+          <section className="flex flex-col gap-6">
+            <div className="flex flex-col gap-1">
+              <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                <span className="w-1.5 h-6 bg-emerald-500 rounded"></span>
+                Certificates
+              </h2>
+              <p className="text-zinc-500 text-sm">Industry verified credentials.</p>
+            </div>
+
+            <div className="space-y-4">
+              {CERTIFICATES.map((cert, certIdx) => (
+                <div 
+                  key={certIdx} 
+                  className="border border-elevated bg-[#0e1320] p-4 rounded-xl flex items-start gap-3 hover:border-zinc-700 transition"
+                >
+                  <CheckCircle size={18} className="text-emerald-400 mt-0.5 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-bold text-sm text-zinc-200 truncate">{cert.title}</h4>
+                    <p className="text-xs text-zinc-500 mt-0.5">{cert.issuer} | {cert.date}</p>
+                    {cert.credentialId && (
+                      <p className="text-[10px] font-mono text-zinc-600 mt-1">ID: {cert.credentialId}</p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
       </div>
 
       {/* 5. Contact Section */}

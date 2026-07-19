@@ -11,10 +11,10 @@ interface ResumeCompilerProps {
 
 const COMPILE_STEPS = [
   "Initializing resume compiler context...",
-  "Querying MongoDB Profile collection...",
-  "Loading dependency tree: 'spring-security', 'aws-sdk-ecs'...",
+  "Querying developer profile database schema...",
+  "Loading dependency tree: 'spring-boot-starter-security', 'aws-java-sdk-s3'...",
   "Formulating education log and certificate validation matrices...",
-  "Parsing projects metadata (cloudstream, devdock, coreengine)...",
+  "Parsing projects metadata (pulsearena, securevote, codepush, mytrip)...",
   "Rendering PDF elements using OpenPDF stream serializers...",
   "Optimizing font files (JetBrains Mono, Inter)...",
   "Resume compiled successfully! Stream ready."
